@@ -33,6 +33,7 @@ module.exports = {
           }
       ],
       'import/prefer-default-export': 'off',
+      'no-param-reassing': 'off',
       'no-console': ["error", { allor: ["tron"] }]
   },
 };
