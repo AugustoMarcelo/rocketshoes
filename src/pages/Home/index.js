@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MdAddShoppingCart } from 'react-icons/md';
+import { FaSpinner } from 'react-icons/fa';
 import Loader from 'react-loader-spinner';
 import { formatPrice } from '../../util/format';
 import api from '../../services/api';
 
 import * as CartActions from '../../store/modules/cart/actions';
 
-import { ProductList } from './styles';
+import { ProductList, AddProductButton } from './styles';
 
 class Home extends Component {
     state = {
         products: [],
+        adding: [],
         loading: false,
     };
 
@@ -54,16 +56,23 @@ class Home extends Component {
                         <img src={product.image} alt={product.title} />
                         <strong>{product.title}</strong>
                         <span>{product.priceFormatted}</span>
-                        <button
+                        <AddProductButton
                             type="button"
                             onClick={() => this.handleAddProduct(product.id)}
+                            adding={product.adding ? 1 : 0}
                         >
-                            <div>
-                                <MdAddShoppingCart size={16} color="#FFF" />{' '}
-                                {amountInCart[product.id] || 0}
-                            </div>
+                            {product.adding ? (
+                                <div>
+                                    <FaSpinner size={16} color="fff" />
+                                </div>
+                            ) : (
+                                <div>
+                                    <MdAddShoppingCart size={16} color="#FFF" />{' '}
+                                    {amountInCart[product.id] || 0}
+                                </div>
+                            )}
                             <span>ADICIONAR AO CARRINHO</span>
-                        </button>
+                        </AddProductButton>
                     </li>
                 ))}
             </ProductList>
@@ -72,10 +81,11 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-    amountInCart: state.cart.reduce((amountInCart, product) => {
+    amountInCart: state.cart.products.reduce((amountInCart, product) => {
         amountInCart[product.id] = product.amount;
         return amountInCart;
     }, {}),
+    adding: state.cart.adding,
 });
 
 const mapDispatchToProps = dispatch =>
