@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { darken } from 'polished';
 
 export const ProductList = styled.ul`
@@ -31,39 +31,63 @@ export const ProductList = styled.ul`
             font-weight: bold;
             margin: 5px 0 20px;
         }
+    }
+`;
 
-        button {
-            background: #7159c1;
-            color: #fff;
-            border: 0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: auto;
+const rotate = keyframes`
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+`;
 
-            display: flex;
-            align-items: center;
-            transition: background 0.2s;
+export const AddProductButton = styled.button.attrs(props => ({
+    disabled: props.adding,
+}))`
+    background: #7159c1;
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: auto;
 
-            &:hover {
-                background: ${darken(0.03, '#7159c1')};
-            }
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
 
-            div {
-                display: flex;
-                align-items: center;
-                padding: 12px;
-                background: rgba(0, 0, 0, 0.1);
+    div {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.1);
 
-                svg {
-                    margin-right: 5px;
-                }
-            }
-
-            span {
-                flex: 1;
-                text-align: center;
-                font-weight: bold;
-            }
+        svg {
+            margin-right: 5px;
         }
     }
+
+    span {
+        flex: 1;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    &:hover {
+        background: ${darken(0.03, '#7159c1')};
+    }
+
+    &[disabled] {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    ${props =>
+        props.adding &&
+        css`
+            svg {
+                animation: ${rotate} 2s linear infinite;
+            }
+        `}
 `;
