@@ -14,7 +14,6 @@ import { ProductList, AddProductButton } from './styles';
 class Home extends Component {
     state = {
         products: [],
-        adding: [],
         loading: false,
     };
 
@@ -38,7 +37,7 @@ class Home extends Component {
 
     render() {
         const { products, loading } = this.state;
-        const { amountInCart } = this.props;
+        const { amountInCart, adding } = this.props;
 
         return loading ? (
             <div style={{ position: 'absolute', top: 300, left: 610 }}>
@@ -59,9 +58,9 @@ class Home extends Component {
                         <AddProductButton
                             type="button"
                             onClick={() => this.handleAddProduct(product.id)}
-                            adding={product.adding ? 1 : 0}
+                            adding={adding.includes(product.id) ? 1 : 0}
                         >
-                            {product.adding ? (
+                            {adding.includes(product.id) ? (
                                 <div>
                                     <FaSpinner size={16} color="fff" />
                                 </div>

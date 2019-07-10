@@ -4,7 +4,11 @@ import { toast } from 'react-toastify';
 import api from '../../../services/api';
 import { formatPrice } from '../../../util/format';
 
-import { addToCartSuccess, updateAmountSuccess } from './actions';
+import {
+    addToCartSuccess,
+    updateAmountSuccess,
+    updateAmountFailed,
+} from './actions';
 
 function* addToCart({ id }) {
     const productExists = yield select(state =>
@@ -20,6 +24,7 @@ function* addToCart({ id }) {
 
     if (amount > stockAmount) {
         toast.error('Quantidade solicitada fora de estoque');
+        yield put(updateAmountFailed(id, amount));
         return;
     }
 
