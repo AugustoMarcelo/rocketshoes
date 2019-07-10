@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 import {
     MdRemoveCircleOutline,
     MdAddCircleOutline,
     MdDelete,
+    MdRemoveShoppingCart,
 } from 'react-icons/md';
 
 import { formatPrice } from '../../util/format';
 import * as CartActions from '../../store/modules/cart/actions';
-import { Container, ProductTable, Total } from './styles';
+import { Container, ProductTable, Total, EmptyCartContainer } from './styles';
 
 function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
     function increment(product) {
@@ -20,7 +22,7 @@ function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
         updateAmountRequest(product.id, product.amount - 1);
     }
 
-    return (
+    return cart.length > 0 ? (
         <Container>
             <ProductTable>
                 <thead>
@@ -92,6 +94,14 @@ function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
                 </Total>
             </footer>
         </Container>
+    ) : (
+        <EmptyCartContainer>
+            <MdRemoveShoppingCart size={128} color="#666" />
+            <p>Seu carrinho ainda está vazio...</p>
+            <Link to="/">
+                <button type="button">Adicionar produtos</button>
+            </Link>
+        </EmptyCartContainer>
     );
 }
 

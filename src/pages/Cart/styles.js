@@ -93,3 +93,36 @@ export const Total = styled.div`
         margin-left: 5px;
     }
 `;
+
+export const EmptyCartContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    height: 400px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+    p {
+        font-size: 18px;
+        color: #888;
+        margin: 20px 0;
+    }
+
+    button {
+        background: #7159c1;
+        color: #fff;
+        border: 0;
+        border-radius: 4px;
+        padding: 12px 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background 0.2s;
+
+        &:hover {
+            background: ${darken(0.03, '#7159c1')};
+        }
+    }
+`;
