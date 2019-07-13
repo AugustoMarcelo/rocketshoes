@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://github.com/augustomarcelo/demo',
+    baseURL: 'https://my-json-server.typicode.com/augustomarcelo/demo',
 });
 
 export default api;
