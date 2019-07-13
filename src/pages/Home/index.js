@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MdAddShoppingCart } from 'react-icons/md';
@@ -11,72 +11,63 @@ import * as CartActions from '../../store/modules/cart/actions';
 
 import { ProductList, AddProductButton } from './styles';
 
-class Home extends Component {
-    state = {
-        products: [],
-        loading: false,
-    };
+function Home({ amountInCart, adding, addToCartRequest }) {
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    async componentDidMount() {
-        this.setState({ loading: true });
-        const response = await api.get('/products');
+    useEffect(() => {
+        setLoading(true);
 
-        const data = response.data.map(product => ({
-            ...product,
-            priceFormatted: formatPrice(product.price),
-        }));
+        async function loadProducts() {
+            const response = await api.get('/products');
 
-        this.setState({ products: data, loading: false });
-    }
+            const data = response.data.map(product => ({
+                ...product,
+                priceFormatted: formatPrice(product.price),
+            }));
+            setLoading(false);
+            setProducts(data);
+        }
 
-    handleAddProduct = id => {
-        const { addToCartRequest } = this.props;
+        loadProducts();
+    }, []);
 
+    function handleAddProduct(id) {
         addToCartRequest(id);
-    };
-
-    render() {
-        const { products, loading } = this.state;
-        const { amountInCart, adding } = this.props;
-
-        return loading ? (
-            <div style={{ position: 'absolute', top: 300, left: 610 }}>
-                <Loader
-                    type="ThreeDots"
-                    color="#fff"
-                    height="100"
-                    width="100"
-                />
-            </div>
-        ) : (
-            <ProductList>
-                {products.map(product => (
-                    <li key={product.id}>
-                        <img src={product.image} alt={product.title} />
-                        <strong>{product.title}</strong>
-                        <span>{product.priceFormatted}</span>
-                        <AddProductButton
-                            type="button"
-                            onClick={() => this.handleAddProduct(product.id)}
-                            adding={adding.includes(product.id) ? 1 : 0}
-                        >
-                            {adding.includes(product.id) ? (
-                                <div>
-                                    <FaSpinner size={16} color="fff" />
-                                </div>
-                            ) : (
-                                <div>
-                                    <MdAddShoppingCart size={16} color="#FFF" />{' '}
-                                    {amountInCart[product.id] || 0}
-                                </div>
-                            )}
-                            <span>ADICIONAR AO CARRINHO</span>
-                        </AddProductButton>
-                    </li>
-                ))}
-            </ProductList>
-        );
     }
+
+    return loading ? (
+        <div style={{ position: 'absolute', top: 300, left: 610 }}>
+            <Loader type="ThreeDots" color="#fff" height="100" width="100" />
+        </div>
+    ) : (
+        <ProductList>
+            {products.map(product => (
+                <li key={product.id}>
+                    <img src={product.image} alt={product.title} />
+                    <strong>{product.title}</strong>
+                    <span>{product.priceFormatted}</span>
+                    <AddProductButton
+                        type="button"
+                        onClick={() => handleAddProduct(product.id)}
+                        adding={adding.includes(product.id) ? 1 : 0}
+                    >
+                        {adding.includes(product.id) ? (
+                            <div>
+                                <FaSpinner size={16} color="fff" />
+                            </div>
+                        ) : (
+                            <div>
+                                <MdAddShoppingCart size={16} color="#FFF" />{' '}
+                                {amountInCart[product.id] || 0}
+                            </div>
+                        )}
+                        <span>ADICIONAR AO CARRINHO</span>
+                    </AddProductButton>
+                </li>
+            ))}
+        </ProductList>
+    );
 }
 
 const mapStateToProps = state => ({
