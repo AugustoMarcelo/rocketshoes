@@ -10,16 +10,16 @@ import Routes from './routes';
 import store from './store';
 
 function App() {
-    return (
-        <Provider store={store}>
-            <BrowserRouter>
-                <Header />
-                <Routes />
-                <GlobalStyle />
-                <ToastContainer autoClose={3000} />
-            </BrowserRouter>
-        </Provider>
-    );
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <Header />
+        <Routes />
+        <GlobalStyle />
+        <ToastContainer autoClose={3000} />
+      </BrowserRouter>
+    </Provider>
+  );
 }
 
 export default App;
