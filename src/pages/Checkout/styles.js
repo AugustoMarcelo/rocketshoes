@@ -5,8 +5,8 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 4fr 1fr;
   width: 100%;
-  max-width: 1000px;
-  padding: 10px;
+  /* max-width: 1000px; */
+  /* padding: 10px; */
   grid-gap: 20px;
 
   @media screen and (max-width: 1000px) {

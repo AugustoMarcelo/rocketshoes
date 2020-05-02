@@ -18,6 +18,10 @@ export const ProductList = styled.ul`
     grid-template-columns: repeat(2, 1fr);
   }
 
+  @media screen and (max-width: 590px) {
+    grid-template-columns: 1fr;
+  }
+
   li {
     display: flex;
     flex-direction: column;
