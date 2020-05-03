@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-const storaged = localStorage.getItem('@RocketShoes:cart');
+const storaged = localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE_KEY);
 
 const INITIAL_STATE = {
   products: storaged !== null ? JSON.parse(storaged) : [],
