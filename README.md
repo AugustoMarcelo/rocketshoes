@@ -17,6 +17,7 @@
 - react-icons
 - styled-components
 - yup
+- localstorage
 
 ---
 
