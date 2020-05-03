@@ -59,7 +59,6 @@ export const Payment = styled.div`
   .card-form {
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
   }
 
   .card {
