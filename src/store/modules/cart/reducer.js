@@ -1,9 +1,7 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-  products: JSON.parse(
-    localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE_KEY) || []
-  ),
+  products: JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE_KEY)) || [],
   adding: [],
 };
 
