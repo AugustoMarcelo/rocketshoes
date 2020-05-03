@@ -4,7 +4,7 @@ const storaged = localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE_KEY);
 console.log(storaged);
 
 const INITIAL_STATE = {
-  products: storaged ? JSON.parse(storaged) : [],
+  products: storaged !== null ? JSON.parse(storaged) : [],
   adding: [],
 };
 
