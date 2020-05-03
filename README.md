@@ -2,6 +2,10 @@
   <img width="100%" src="https://user-images.githubusercontent.com/11545976/80872623-67512200-8c89-11ea-8438-6e72fddd9831.png">
 </h1>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2514f161-e872-46b6-bbd1-cd7350b76b00/deploy-status)](https://app.netlify.com/sites/rocketshoesapp/deploys)
+
+---
+
 ## 📑 About
 **Rocketshoes** is an application that simulates a small virtual store, with the option of shopping cart and order payment. You can access the page <a href="https://rocketshoesapp.netlify.com" target="_blank">here</a>, it's hosted on Netlify.
 
