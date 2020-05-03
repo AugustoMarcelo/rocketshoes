@@ -9,12 +9,7 @@ import { Container, Cart } from './styles';
 import logo from '../../assets/images/logo.svg';
 
 export default function Header() {
-  const cartSize = useSelector(
-    state =>
-      state.cart.products.length ||
-      JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE_KEY))
-        .length
-  );
+  const cartSize = useSelector(state => state.cart.products.length || 0);
 
   return (
     <Container>
