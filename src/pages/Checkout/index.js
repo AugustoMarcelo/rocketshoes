@@ -8,11 +8,11 @@ import Cards from 'react-credit-cards';
 
 import { formatPrice } from '../../util/format';
 import getValidationErrors from '../../util/getValidationErrors';
-import initialData from './data';
+// import initialData from './data';
 
 import Input from '../../components/Input';
 
-import { Container, Payment, Order, Button } from './styles';
+import { Container, Payment, ThreeFieldGroup, Order, Button } from './styles';
 
 export default function Checkout() {
   const formRef = useRef(null);
@@ -25,13 +25,15 @@ export default function Checkout() {
     id: '',
   });
 
-  const total = useSelector(state =>
-    formatPrice(
-      state.cart.products.reduce((sumTotal, product) => {
-        return sumTotal + product.price * product.amount;
-      }, 0)
-    )
-  );
+  const subtotal = useSelector(state => {
+    const { products } = state.cart;
+
+    return products.reduce((sumTotal, product) => {
+      return sumTotal + product.price * product.amount;
+    }, 0);
+  });
+
+  const freight = subtotal * 0.1;
 
   function handleChangeInputPayment(e) {
     const name = e.target.id.split('.')[1].replace(/card_/, '');
@@ -97,35 +99,20 @@ export default function Checkout() {
 
   return (
     <Container>
-      <Form
-        initialData={initialData}
-        onFocus={handleInputFocus}
-        onSubmit={handleSubmit}
-        ref={formRef}
-      >
+      <Form onFocus={handleInputFocus} onSubmit={handleSubmit} ref={formRef}>
         <h3>Informações pessoais</h3>
         <Scope path="customer">
           <Input name="name" placeholder="Nome completo" />
-          <Input name="email" type="email" placeholder="Informe um e-mail" />
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gridColumnGap: 10,
-            }}
-          >
-            <Input
-              name="cpf"
-              placeholder="Informe seu CPF"
-              mask="999.999.999-99"
-            />
-            <Input name="rg" placeholder="Informe seu RG" mask="99.999.999-9" />
+          <Input name="email" type="email" placeholder="E-mail" />
+          <ThreeFieldGroup>
+            <Input name="cpf" placeholder="CPF" mask="999.999.999-99" />
+            <Input name="rg" placeholder="RG" mask="99.999.999-9" />
             <Input
               name="phone"
               placeholder="+55 84 99999-9999"
               mask="+99 99 99999-9999"
             />
-          </div>
+          </ThreeFieldGroup>
         </Scope>
 
         <h3>Endereço</h3>
@@ -141,17 +128,11 @@ export default function Checkout() {
             <Input name="street" placeholder="Logradouro:" />
             <Input name="street_number" placeholder="Número:" />
           </div>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gridColumnGap: 10,
-            }}
-          >
+          <ThreeFieldGroup>
             <Input name="neighborhood" placeholder="Bairro:" />
             <Input name="city" placeholder="Cidade:" />
             <Input name="state" placeholder="Estado:" />
-          </div>
+          </ThreeFieldGroup>
         </Scope>
 
         <Payment>
@@ -198,6 +179,7 @@ export default function Checkout() {
               expiry={card.expiry}
               cvc={card.cvc}
               focused={card.focus}
+              className="card-style"
             />
           </div>
         </Payment>
@@ -206,16 +188,16 @@ export default function Checkout() {
       <Order>
         <div>
           <span>Subtotal</span>
-          <strong>{total}</strong>
+          <strong>{formatPrice(subtotal)}</strong>
         </div>
         <div>
           <span>Frete</span>
-          <strong>{total}</strong>
+          <strong>{formatPrice(freight)}</strong>
         </div>
         <hr />
         <div>
           <span>Total</span>
-          <strong>{total}</strong>
+          <strong>{formatPrice(subtotal + freight)}</strong>
         </div>
       </Order>
     </Container>

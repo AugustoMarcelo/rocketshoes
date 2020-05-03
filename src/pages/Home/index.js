@@ -13,12 +13,15 @@ import { ContainerLoader, ProductList, AddProductButton } from './styles';
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const amountInCart = useSelector(state =>
-    state.cart.products.reduce((sumAmount, product) => {
+  const amountInCart = useSelector(state => {
+    const storagedProducts = state.cart.products;
+
+    return storagedProducts.reduce((sumAmount, product) => {
       sumAmount[product.id] = product.amount;
       return sumAmount;
-    }, {})
-  );
+    }, {});
+  });
+
   const adding = useSelector(state => state.cart.adding);
 
   const dispatch = useDispatch();

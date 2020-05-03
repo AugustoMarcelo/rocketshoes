@@ -13,20 +13,24 @@ import * as CartActions from '../../store/modules/cart/actions';
 import { Container, ProductTable, Total, EmptyCartContainer } from './styles';
 
 export default function Cart() {
-  const cart = useSelector(state =>
-    state.cart.products.map(product => ({
+  const cart = useSelector(state => {
+    const { products } = state.cart;
+
+    return products.map(product => ({
       ...product,
       subtotal: formatPrice(product.price * product.amount),
-    }))
-  );
+    }));
+  });
 
-  const total = useSelector(state =>
-    formatPrice(
-      state.cart.products.reduce((sumTotal, product) => {
+  const total = useSelector(state => {
+    const { products } = state.cart;
+
+    return formatPrice(
+      products.reduce((sumTotal, product) => {
         return sumTotal + product.price * product.amount;
       }, 0)
-    )
-  );
+    );
+  });
 
   const dispatch = useDispatch();
 

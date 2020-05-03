@@ -5,8 +5,6 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 4fr 1fr;
   width: 100%;
-  /* max-width: 1000px; */
-  /* padding: 10px; */
   grid-gap: 20px;
 
   @media screen and (max-width: 1000px) {
@@ -34,6 +32,17 @@ export const Container = styled.div`
   }
 `;
 
+export const ThreeFieldGroup = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 10px;
+
+  @media screen and (max-width: 450px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 export const Payment = styled.div`
   display: flex;
   align-items: center;
@@ -52,6 +61,15 @@ export const Payment = styled.div`
     flex-direction: column;
     margin-right: 10px;
   }
+
+  .card {
+    .rccs,
+    .rccs > div {
+      @media screen and (max-width: 450px) {
+        width: 100%;
+      }
+    }
+  }
 `;
 
 export const Button = styled.button`
@@ -67,6 +85,10 @@ export const Button = styled.button`
 
   &:hover {
     background: ${darken(0.03, '#7159c1')};
+  }
+
+  @media screen and (max-width: 450px) {
+    align-self: stretch;
   }
 `;
 

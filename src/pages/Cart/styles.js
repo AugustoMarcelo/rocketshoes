@@ -10,7 +10,7 @@ export const Container = styled.div`
     margin-top: 30px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
 
     a {
       text-decoration: none;
@@ -28,6 +28,19 @@ export const Container = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 590px) {
+    footer {
+      flex-direction: column-reverse;
+      margin-top: 10px;
+
+      a {
+        align-self: stretch;
+        text-align: center;
+        margin-top: 10px;
+      }
+    }
+  }
 `;
 
 export const ProductTable = styled.table`
@@ -39,9 +52,12 @@ export const ProductTable = styled.table`
     padding: 12px;
   }
 
+  tbody tr {
+    border-bottom: 1px solid #eee;
+  }
+
   tbody td {
     padding: 12px;
-    border-bottom: 1px solid #eee;
   }
 
   img {
@@ -85,6 +101,18 @@ export const ProductTable = styled.table`
 
     &:hover {
       background: #f5f5f5;
+    }
+  }
+
+  @media screen and (max-width: 590px) {
+    thead {
+      display: none;
+    }
+
+    tbody tr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 `;
