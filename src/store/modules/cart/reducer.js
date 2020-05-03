@@ -1,11 +1,9 @@
 import produce from 'immer';
 
-const products =
-  JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE_KEY)) ||
-  [];
+const storaged = localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE_KEY);
 
 const INITIAL_STATE = {
-  products,
+  products: storaged ? JSON.parse(storaged) : [],
   adding: [],
 };
 
